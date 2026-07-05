@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 export default function Apply() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     minecraft: "",
     discord: "",
@@ -59,6 +62,65 @@ export default function Apply() {
           margin: "auto",
         }}
       >
+        {/* Top Bar */}
+        <div
+          style={{
+            direction: "ltr",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "50px",
+            paddingBottom: "20px",
+            borderBottom: "1px solid #2d2d40",
+          }}
+        >
+          <div
+            onClick={() => navigate("/")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#a855f7";
+              e.currentTarget.style.transform = "scale(1.08)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              cursor: "pointer",
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "600",
+              transition: "all .3s ease",
+            }}
+          >
+            🏠 Home
+          </div>
+
+          <h2
+            onClick={() => navigate("/")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.textShadow =
+                "0 0 20px rgba(168,85,247,.8)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.textShadow = "none";
+            }}
+            style={{
+              color: "#a855f7",
+              margin: 0,
+              cursor: "pointer",
+              fontSize: "34px",
+              transition: ".3s",
+            }}
+          >
+            JK Community
+          </h2>
+        </div>
+
         <h1
           style={{
             textAlign: "center",
@@ -123,8 +185,7 @@ export default function Apply() {
               placeholder="Type your answer..."
             />
           </Question>
-
-          <Question
+                    <Question
             number="5"
             title="Do you have previous staff experience?"
           >
@@ -137,7 +198,10 @@ export default function Apply() {
             />
           </Question>
 
-          <Question number="6" title="Why should we choose you?">
+          <Question
+            number="6"
+            title="Why should we choose you?"
+          >
             <textarea
               rows="7"
               name="why"
