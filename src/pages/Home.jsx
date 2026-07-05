@@ -5,26 +5,25 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetch(
-  import.meta.env.PROD
-    ? "https://jk-community.onrender.com/api/user"
-    : "http://localhost:3000/api/user",
-  {
-      credentials: "include",
-      mode: "cors",
-    })
+      import.meta.env.PROD
+        ? "https://jk-community.onrender.com/api/user"
+        : "http://localhost:3000/api/user",
+      {
+        credentials: "include",
+        mode: "cors",
+      }
+    )
       .then((res) => res.json())
-.then((data) => {
-  console.log(data);
-  setUser(data);
+      .then((data) => {
+        setUser(data);
 
-  if (data) {
-    localStorage.setItem("user", JSON.stringify(data));
-  }
-})
+        if (data) {
+          localStorage.setItem("user", JSON.stringify(data));
+        }
+      })
       .catch(console.error);
   }, []);
 
@@ -33,12 +32,14 @@ export default function Home() {
       dir="rtl"
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #0B0B14 0%, #111122 100%)",
+        background: "linear-gradient(135deg,#0B0B14,#111122)",
         color: "white",
         fontFamily: "Arial",
       }}
     >
-<Navbar user={user} />
+      <Navbar user={user} />
+
+      {/* Hero */}
       <div
         style={{
           textAlign: "center",
@@ -49,7 +50,6 @@ export default function Home() {
           style={{
             fontSize: "60px",
             marginBottom: "20px",
-            lineHeight: "1.4",
           }}
         >
           مرحباً بك في
@@ -80,6 +80,7 @@ export default function Home() {
           justifyContent: "center",
           gap: "30px",
           marginTop: "120px",
+          flexWrap: "wrap",
         }}
       >
         <div
@@ -122,23 +123,90 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Clan Application */}
-      <div className="form-card">
-        <div className="icon-box">📄</div>
+      {/* Application Card */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "90px",
+          marginBottom: "100px",
+        }}
+      >
+        <div
+          onClick={() => navigate("/apply")}
+          style={{
+            width: "430px",
+            background: "#171727",
+            border: "1px solid #2d2d40",
+            borderRadius: "20px",
+            padding: "35px",
+            cursor: "pointer",
+            transition: ".25s",
+            boxShadow: "0 15px 40px rgba(0,0,0,.4)",
+          }}
+        >
+          <div
+            style={{
+              width: "65px",
+              height: "65px",
+              borderRadius: "16px",
+              background: "#a855f7",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "30px",
+              color: "#fff",
+              boxShadow: "0 0 20px rgba(168,85,247,.45)",
+            }}
+          >
+            📄
+          </div>
 
-        <h2>Clan Application</h2>
+          <h2
+            style={{
+              marginTop: "25px",
+              marginBottom: "15px",
+              fontSize: "34px",
+            }}
+          >
+            Staff Application
+          </h2>
 
-        <p>
-          Welcome to the official JK Community Clan Application Form.
-          Please complete the form honestly and carefully before submitting.
-        </p>
+          <p
+            style={{
+              color: "#9ca3af",
+              lineHeight: "1.9",
+              fontSize: "17px",
+            }}
+          >
+            Welcome to the official JK Community Staff Application Form.
+            Please fill out this form honestly and carefully.
+            Make sure you meet all the listed requirements before applying.
+            Once submitted, our Staff Management Team will review your application.
+          </p>
 
-        <button
-  className="submit-btn"
-  onClick={() => navigate("/apply")}
->
-          ➜ Submit Form
-        </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate("/apply");
+            }}
+            style={{
+              width: "100%",
+              marginTop: "30px",
+              padding: "17px",
+              border: "none",
+              borderRadius: "12px",
+              background: "#a855f7",
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              boxShadow: "0 10px 25px rgba(168,85,247,.35)",
+            }}
+          >
+            ➜ Submit Form
+          </button>
+        </div>
       </div>
     </div>
   );

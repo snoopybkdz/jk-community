@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import UserMenu from "./UserMenu";
 
 export default function Navbar({ user }) {
+  const navigate = useNavigate();
+
   return (
     <nav
       style={{
@@ -12,10 +15,12 @@ export default function Navbar({ user }) {
       }}
     >
       <h1
+        onClick={() => navigate("/")}
         style={{
           color: "#a855f7",
           fontSize: "30px",
           margin: 0,
+          cursor: "pointer",
         }}
       >
         JK Community
@@ -29,6 +34,7 @@ export default function Navbar({ user }) {
         }}
       >
         <div
+          onClick={() => navigate("/")}
           style={{
             cursor: "pointer",
             fontSize: "18px",
@@ -38,12 +44,13 @@ export default function Navbar({ user }) {
         </div>
 
         <div
+          onClick={() => navigate("/apply")}
           style={{
             cursor: "pointer",
             fontSize: "18px",
           }}
         >
-          📄 Clan Application
+          📄 Staff Application
         </div>
 
         <UserMenu user={user} />
