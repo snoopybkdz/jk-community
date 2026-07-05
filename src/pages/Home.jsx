@@ -17,10 +17,14 @@ export default function Home() {
       mode: "cors",
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setUser(data);
-      })
+.then((data) => {
+  console.log(data);
+  setUser(data);
+
+  if (data) {
+    localStorage.setItem("user", JSON.stringify(data));
+  }
+})
       .catch(console.error);
   }, []);
 
@@ -139,4 +143,3 @@ export default function Home() {
     </div>
   );
 }
-

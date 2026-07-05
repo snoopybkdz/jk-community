@@ -89,10 +89,11 @@ app.get("/api/user", (req, res) => {
     return res.json(null);
   }
 
-  res.json({
-    username: req.user.username,
-    avatar: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-  });
+res.json({
+  id: req.user.id,
+  username: req.user.username,
+  avatar: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+});
 });
 
 // تسجيل الخروج
