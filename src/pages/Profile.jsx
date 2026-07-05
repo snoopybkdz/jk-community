@@ -4,7 +4,11 @@ export default function Profile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/user", {
+    fetch(
+  import.meta.env.PROD
+    ? "https://jk-community.onrender.com/api/user"
+    : "http://localhost:3000/api/user",
+  {
       credentials: "include",
     })
       .then((res) => res.json())

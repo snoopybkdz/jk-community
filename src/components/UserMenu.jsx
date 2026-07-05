@@ -111,7 +111,10 @@ export default function UserMenu({ user }) {
 
           <div
             onClick={() => {
-              window.location.href = "http://localhost:3000/logout";
+              window.location.href =
+  import.meta.env.PROD
+    ? "https://jk-community.onrender.com/logout"
+    : "http://localhost:3000/logout";
             }}
             style={{
               padding: "15px 20px",

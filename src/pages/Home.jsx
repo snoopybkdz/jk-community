@@ -8,7 +8,11 @@ export default function Home() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/user", {
+    fetch(
+  import.meta.env.PROD
+    ? "https://jk-community.onrender.com/api/user"
+    : "http://localhost:3000/api/user",
+  {
       credentials: "include",
       mode: "cors",
     })
