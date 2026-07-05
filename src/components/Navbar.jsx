@@ -1,30 +1,33 @@
 import { useNavigate } from "react-router-dom";
-import UserMenu from "./UserMenu";
 import { useEffect, useState } from "react";
+import UserMenu from "./UserMenu";
 import { supabase } from "../lib/supabase";
 
 export default function Navbar({ user }) {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
-const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    async function checkAdmin() {
+      if (!user?.id) return;
 
-useEffect(() => {
-  async function checkAdmin() {
-    if (!user?.id) return;
+      const { data, error } = await supabase
+        .from("admins")
+        .select("discord_id, role");
 
-    const { data } = await supabase
-      .from("admins")
-      .select("*")
-      .eq("discord_id", user.id)
-      .single();
+      console.log("USER ID:", user.id);
+      console.log("ADMIN DATA:", data);
+      console.log("ADMIN ERROR:", error);
 
-    if (data) {
-      setIsAdmin(true);
+      if (data?.some((admin) => admin.discord_id === user.id)) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
     }
-  }
 
-  checkAdmin();
-}, [user]);
+    checkAdmin();
+  }, [user]);
 
   const itemStyle = {
     cursor: "pointer",
@@ -43,7 +46,7 @@ useEffect(() => {
         borderBottom: "1px solid #222",
       }}
     >
-      {/* Left Logo */}
+      {/* Logo */}
       <h1
         onClick={() => navigate("/")}
         style={{
@@ -56,7 +59,7 @@ useEffect(() => {
         JK Community
       </h1>
 
-      {/* Right Menu */}
+      {/* Menu */}
       <div
         style={{
           display: "flex",
@@ -68,34 +71,35 @@ useEffect(() => {
           onClick={() => navigate("/")}
           style={itemStyle}
           onMouseEnter={(e) => {
-            e.target.style.color = "#a855f7";
-            e.target.style.transform = "scale(1.08)";
+            e.currentTarget.style.color = "#a855f7";
+            e.currentTarget.style.transform = "scale(1.08)";
           }}
           onMouseLeave={(e) => {
-            e.target.style.color = "white";
-            e.target.style.transform = "scale(1)";
+            e.currentTarget.style.color = "white";
+            e.currentTarget.style.transform = "scale(1)";
           }}
         >
           🏠 Home
         </div>
 
-        <UserMenu user={user} />
         {isAdmin && (
-  <div
-    onClick={() => navigate("/administrator")}
-    style={itemStyle}
-    onMouseEnter={(e) => {
-      e.target.style.color = "#a855f7";
-      e.target.style.transform = "scale(1.08)";
-    }}
-    onMouseLeave={(e) => {
-      e.target.style.color = "white";
-      e.target.style.transform = "scale(1)";
-    }}
-  >
-    🛡 Administrator
-  </div>
-)}
+          <div
+            onClick={() => navigate("/administrator")}
+            style={itemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#a855f7";
+              e.currentTarget.style.transform = "scale(1.08)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "white";
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+          >
+            🛡 Administrator
+          </div>
+        )}
+
+        <UserMenu user={user} />
       </div>
     </nav>
   );
