@@ -4,6 +4,13 @@ import UserMenu from "./UserMenu";
 export default function Navbar({ user }) {
   const navigate = useNavigate();
 
+  const itemStyle = {
+    cursor: "pointer",
+    fontSize: "18px",
+    color: "white",
+    transition: "all .25s ease",
+  };
+
   return (
     <nav
       style={{
@@ -14,18 +21,20 @@ export default function Navbar({ user }) {
         borderBottom: "1px solid #222",
       }}
     >
+      {/* Left Logo */}
       <h1
         onClick={() => navigate("/")}
         style={{
-          color: "#a855f7",
-          fontSize: "30px",
           margin: 0,
+          color: "#a855f7",
+          fontSize: "42px",
           cursor: "pointer",
         }}
       >
         JK Community
       </h1>
 
+      {/* Right Menu */}
       <div
         style={{
           display: "flex",
@@ -35,22 +44,17 @@ export default function Navbar({ user }) {
       >
         <div
           onClick={() => navigate("/")}
-          style={{
-            cursor: "pointer",
-            fontSize: "18px",
+          style={itemStyle}
+          onMouseEnter={(e) => {
+            e.target.style.color = "#a855f7";
+            e.target.style.transform = "scale(1.08)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.color = "white";
+            e.target.style.transform = "scale(1)";
           }}
         >
           🏠 Home
-        </div>
-
-        <div
-          onClick={() => navigate("/apply")}
-          style={{
-            cursor: "pointer",
-            fontSize: "18px",
-          }}
-        >
-          📄 Staff Application
         </div>
 
         <UserMenu user={user} />
