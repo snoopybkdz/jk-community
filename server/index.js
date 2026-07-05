@@ -9,27 +9,30 @@ dotenv.config({
   path: "./server/.env",
 });
 
-console.log("CLIENT_ID =", process.env.CLIENT_ID);
-console.log("CLIENT_SECRET =", process.env.CLIENT_SECRET);
-
 const app = express();
+
+app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://jk-community.vercel.app",
+    ],
     credentials: true,
   })
 );
 
 app.use(
   session({
-    secret: "jkcommunitysecret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 يوم
+      maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
-      secure: false, // localhost فقط
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   })
 );
@@ -51,9 +54,9 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL:
-  process.env.NODE_ENV === "production"
-    ? "https://jk-community.onrender.com/auth/discord/callback"
-    : "http://localhost:3000/auth/discord/callback",
+        process.env.NODE_ENV === "production"
+          ? "https://jk-community.onrender.com/auth/discord/callback"
+          : "http://localhost:3000/auth/discord/callback",
       scope: ["identify"],
     },
     (accessToken, refreshToken, profile, done) => {
@@ -65,14 +68,18 @@ passport.use(
 // تسجيل الدخول
 app.get("/auth/discord", passport.authenticate("discord"));
 
-// Callback بعد تسجيل الدخول
+// Callback
 app.get(
   "/auth/discord/callback",
-  passport.authenticate("discord", {
+  passport.authenticate({
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173");
+    res.redirect(
+      process.env.NODE_ENV === "production"
+        ? "https://jk-community.vercel.app"
+        : "http://localhost:5173"
+    );
   }
 );
 
@@ -97,11 +104,18 @@ app.get("/logout", (req, res) => {
 
     req.session.destroy(() => {
       res.clearCookie("connect.sid");
-      res.redirect("http://localhost:5173");
+
+      res.redirect(
+        process.env.NODE_ENV === "production"
+          ? "https://jk-community.vercel.app"
+          : "http://localhost:5173"
+      );
     });
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(process.env.PORT || 3000, () => {
+  console.log(
+    `Server running on port ${process.env.PORT || 3000}`
+  );
 });
