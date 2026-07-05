@@ -24,13 +24,17 @@ export default function Admin() {
   }
 
   async function updateStatus(id, status) {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("applications")
       .update({ status })
-      .eq("id", id);
+      .eq("id", id)
+      .select();
+
+    console.log("UPDATE DATA:", data);
+    console.log("UPDATE ERROR:", error);
 
     if (error) {
-      alert("Failed to update status");
+      alert(error.message);
       return;
     }
 
@@ -150,7 +154,8 @@ export default function Admin() {
           </div>
         </div>
       ))}
-            {selected && (
+
+      {selected && (
         <div
           onClick={() => setSelected(null)}
           style={{
@@ -184,19 +189,14 @@ export default function Admin() {
             </h2>
 
             <p><b>Minecraft:</b> {selected.minecraft}</p>
-
             <p><b>Discord:</b> {selected.discord_username}</p>
-
             <p><b>Age:</b> {selected.age}</p>
-
             <p><b>Country:</b> {selected.country}</p>
 
             <h3 style={{ color: "#a855f7" }}>Experience</h3>
-
             <p>{selected.experience}</p>
 
             <h3 style={{ color: "#a855f7" }}>Why should we choose you?</h3>
-
             <p>{selected.why}</p>
 
             <button
