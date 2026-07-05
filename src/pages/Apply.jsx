@@ -38,11 +38,11 @@ export default function Apply() {
       },
     ]);
 
-    if (error) {
-      console.log(error);
-      alert("Failed to submit application.");
-      return;
-    }
+if (error) {
+  console.error(error);
+  alert(error.message);
+  return;
+}
 
     alert("Application submitted successfully!");
   }
