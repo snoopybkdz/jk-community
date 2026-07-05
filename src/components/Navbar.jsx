@@ -1,8 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import UserMenu from "./UserMenu";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
 export default function Navbar({ user }) {
   const navigate = useNavigate();
+
+const [isAdmin, setIsAdmin] = useState(false);
+
+useEffect(() => {
+  async function checkAdmin() {
+    if (!user?.id) return;
+
+    const { data } = await supabase
+      .from("admins")
+      .select("*")
+      .eq("discord_id", user.id)
+      .single();
+
+    if (data) {
+      setIsAdmin(true);
+    }
+  }
+
+  checkAdmin();
+}, [user]);
 
   const itemStyle = {
     cursor: "pointer",
@@ -58,6 +80,22 @@ export default function Navbar({ user }) {
         </div>
 
         <UserMenu user={user} />
+        {isAdmin && (
+  <div
+    onClick={() => navigate("/administrator")}
+    style={itemStyle}
+    onMouseEnter={(e) => {
+      e.target.style.color = "#a855f7";
+      e.target.style.transform = "scale(1.08)";
+    }}
+    onMouseLeave={(e) => {
+      e.target.style.color = "white";
+      e.target.style.transform = "scale(1)";
+    }}
+  >
+    🛡 Administrator
+  </div>
+)}
       </div>
     </nav>
   );
