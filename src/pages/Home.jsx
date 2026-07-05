@@ -49,6 +49,7 @@ export default function Home() {
         <h1
           style={{
             fontSize: "60px",
+            lineHeight: "1.4",
             marginBottom: "20px",
           }}
         >
@@ -61,7 +62,7 @@ export default function Home() {
 
         <p
           style={{
-            color: "#aaa",
+            color: "#9ca3af",
             fontSize: "22px",
             maxWidth: "800px",
             margin: "auto",
@@ -69,7 +70,7 @@ export default function Home() {
           }}
         >
           الموقع الرسمي لتقديم طلبات الإدارة والانضمام إلى فريق العمل.
-          جميع الطلبات تتم مراجعتها من قبل الإدارة بشكل يدوي.
+          جميع الطلبات تتم مراجعتها يدوياً من قبل الإدارة.
         </p>
       </div>
 
@@ -79,16 +80,16 @@ export default function Home() {
           display: "flex",
           justifyContent: "center",
           gap: "30px",
-          marginTop: "120px",
+          marginTop: "100px",
           flexWrap: "wrap",
         }}
       >
         <div
           style={{
-            background: "#171727",
-            padding: "30px",
-            borderRadius: "20px",
             width: "220px",
+            background: "#171727",
+            borderRadius: "18px",
+            padding: "30px",
             textAlign: "center",
           }}
         >
@@ -98,10 +99,10 @@ export default function Home() {
 
         <div
           style={{
-            background: "#171727",
-            padding: "30px",
-            borderRadius: "20px",
             width: "220px",
+            background: "#171727",
+            borderRadius: "18px",
+            padding: "30px",
             textAlign: "center",
           }}
         >
@@ -111,10 +112,10 @@ export default function Home() {
 
         <div
           style={{
-            background: "#171727",
-            padding: "30px",
-            borderRadius: "20px",
             width: "220px",
+            background: "#171727",
+            borderRadius: "18px",
+            padding: "30px",
             textAlign: "center",
           }}
         >
@@ -123,90 +124,107 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Application Card */}
+      {/* Staff Application Card */}
       <div
+        onClick={() => navigate("/apply")}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-10px) scale(1.03)";
+          e.currentTarget.style.boxShadow =
+            "0 0 45px rgba(168,85,247,.45)";
+          e.currentTarget.style.borderColor = "#a855f7";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0) scale(1)";
+          e.currentTarget.style.boxShadow =
+            "0 15px 40px rgba(0,0,0,.35)";
+          e.currentTarget.style.borderColor = "#2d2d40";
+        }}
         style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "90px",
-          marginBottom: "100px",
+          width: "470px",
+          margin: "90px auto",
+          background: "#171727",
+          borderRadius: "22px",
+          border: "1px solid #2d2d40",
+          padding: "35px",
+          cursor: "pointer",
+          transition: ".35s",
+          boxShadow: "0 15px 40px rgba(0,0,0,.35)",
         }}
       >
+        {/* Icon */}
         <div
-          onClick={() => navigate("/apply")}
           style={{
-            width: "430px",
-            background: "#171727",
-            border: "1px solid #2d2d40",
-            borderRadius: "20px",
-            padding: "35px",
-            cursor: "pointer",
-            transition: ".25s",
-            boxShadow: "0 15px 40px rgba(0,0,0,.4)",
+            width: "65px",
+            height: "65px",
+            borderRadius: "16px",
+            background: "#a855f7",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "30px",
+            boxShadow: "0 0 25px rgba(168,85,247,.45)",
           }}
         >
-          <div
-            style={{
-              width: "65px",
-              height: "65px",
-              borderRadius: "16px",
-              background: "#a855f7",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "30px",
-              color: "#fff",
-              boxShadow: "0 0 20px rgba(168,85,247,.45)",
-            }}
-          >
-            📄
-          </div>
-
-          <h2
-            style={{
-              marginTop: "25px",
-              marginBottom: "15px",
-              fontSize: "34px",
-            }}
-          >
-            Staff Application
-          </h2>
-
-          <p
-            style={{
-              color: "#9ca3af",
-              lineHeight: "1.9",
-              fontSize: "17px",
-            }}
-          >
-            Welcome to the official JK Community Staff Application Form.
-            Please fill out this form honestly and carefully.
-            Make sure you meet all the listed requirements before applying.
-            Once submitted, our Staff Management Team will review your application.
-          </p>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/apply");
-            }}
-            style={{
-              width: "100%",
-              marginTop: "30px",
-              padding: "17px",
-              border: "none",
-              borderRadius: "12px",
-              background: "#a855f7",
-              color: "white",
-              fontSize: "18px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              boxShadow: "0 10px 25px rgba(168,85,247,.35)",
-            }}
-          >
-            ➜ Submit Form
-          </button>
+          📄
         </div>
+
+        {/* Title */}
+        <h2
+          style={{
+            marginTop: "25px",
+            color: "white",
+            fontSize: "38px",
+          }}
+        >
+          Staff Application
+        </h2>
+
+        {/* Description */}
+        <p
+          style={{
+            color: "#9ca3af",
+            lineHeight: "2",
+            fontSize: "17px",
+          }}
+        >
+          Welcome to the official JK Community Staff Application Form.
+          Please fill out this form honestly and carefully.
+          Make sure you meet all the listed requirements before applying.
+          Once submitted, our Staff Management Team will review your
+          application.
+        </p>
+
+        {/* Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate("/apply");
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = "#9333ea";
+            e.target.style.boxShadow =
+              "0 0 30px rgba(168,85,247,.65)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "#a855f7";
+            e.target.style.boxShadow = "none";
+          }}
+          style={{
+            width: "100%",
+            marginTop: "30px",
+            padding: "18px",
+            border: "none",
+            borderRadius: "14px",
+            background: "#a855f7",
+            color: "white",
+            fontSize: "20px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: ".3s",
+          }}
+        >
+          ➜ Submit Form
+        </button>
       </div>
     </div>
   );

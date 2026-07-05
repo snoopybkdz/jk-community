@@ -149,6 +149,16 @@ export default function Apply() {
 
           <button
             type="submit"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.03)";
+              e.currentTarget.style.boxShadow =
+                "0 0 35px rgba(168,85,247,.65)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow =
+                "0 0 20px rgba(168,85,247,.35)";
+            }}
             style={{
               width: "100%",
               marginTop: "40px",
@@ -160,6 +170,7 @@ export default function Apply() {
               fontSize: "20px",
               fontWeight: "bold",
               cursor: "pointer",
+              transition: "all .3s ease",
               boxShadow: "0 0 20px rgba(168,85,247,.35)",
             }}
           >
@@ -174,12 +185,24 @@ export default function Apply() {
 function Question({ number, title, children }) {
   return (
     <div
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-6px) scale(1.02)";
+        e.currentTarget.style.boxShadow =
+          "0 0 35px rgba(168,85,247,.35)";
+        e.currentTarget.style.borderColor = "#a855f7";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0) scale(1)";
+        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.borderColor = "#2d2d40";
+      }}
       style={{
         background: "#171727",
         borderRadius: "18px",
         padding: "30px",
         marginBottom: "30px",
         border: "1px solid #2d2d40",
+        transition: "all .3s ease",
       }}
     >
       <div
@@ -229,6 +252,7 @@ function Question({ number, title, children }) {
           font-size:16px;
           outline:none;
           box-sizing:border-box;
+          transition:.25s;
         }
 
         textarea{
@@ -238,6 +262,7 @@ function Question({ number, title, children }) {
         input:focus,
         textarea:focus{
           border-color:#a855f7;
+          box-shadow:0 0 15px rgba(168,85,247,.35);
         }
       `}</style>
     </div>
