@@ -5,7 +5,9 @@ import { Strategy as DiscordStrategy } from "passport-discord";
 import cors from "cors";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({
+  path: "./server/.env",
+});
 
 console.log("CLIENT_ID =", process.env.CLIENT_ID);
 console.log("CLIENT_SECRET =", process.env.CLIENT_SECRET);
@@ -48,7 +50,10 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/discord/callback",
+      callbackURL:
+  process.env.NODE_ENV === "production"
+    ? "https://jk-community.onrender.com/auth/discord/callback"
+    : "http://localhost:3000/auth/discord/callback",
       scope: ["identify"],
     },
     (accessToken, refreshToken, profile, done) => {
